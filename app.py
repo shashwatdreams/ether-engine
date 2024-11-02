@@ -26,7 +26,7 @@ scraped_text = scrape_website(url)
 if scraped_text:
     # Define a prompt template that takes a single input
     prompt_template = """
-    You are a knowledgeable assistant trained on the information from a website. 
+    Talk like you in the victorian time, steampunk theme. You are a knowledgeable assistant trained on the information from a website. 
     Answer questions based on the website content as accurately as possible.
     If you cannot find the answer in the provided content, politely indicate that.
     Context:
