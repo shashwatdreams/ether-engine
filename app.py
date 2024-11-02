@@ -24,8 +24,6 @@ def scrape_website(url):
 # Scrape content and set up memory if successful
 scraped_text = scrape_website(url)
 if scraped_text:
-    memory = ConversationBufferMemory()
-
     # Define a prompt template for guidance
     prompt_template = """
     You are a knowledgeable assistant trained on the information from a website. 
@@ -39,7 +37,8 @@ if scraped_text:
     
     prompt = PromptTemplate(input_variables=["context", "input"], template=prompt_template)
     
-    # Set up the language model and chain
+    # Set up the language model and chain with memory
+    memory = ConversationBufferMemory(memory_key="chat_history")
     llm = ChatOpenAI(model_name="gpt-4-turbo", temperature=0)
     conversation_chain = LLMChain(
         llm=llm,
