@@ -45,12 +45,27 @@ if scraped_text:
     st.title("Website-Scraped Chatbot")
     st.write("Ask questions based on the scraped data from the website.")
 
-    # User input
-    user_input = st.text_input("You:", "")
+    # Initialize session state for conversation history
+    if "history" not in st.session_state:
+        st.session_state.history = []
 
-    # Display chatbot response
+    # Display chat history
+    for i, (user_msg, bot_msg) in enumerate(st.session_state.history):
+        st.write(f"You: {user_msg}")
+        st.write(f"Chatbot: {bot_msg}")
+
+    # User input
+    user_input = st.text_input("Type your message:")
+
     if user_input:
+        # Get the chatbot response
         response = conversation_chain.run(user_input)
+
+        # Update the conversation history
+        st.session_state.history.append((user_input, response))
+
+        # Display the new interaction
+        st.write(f"You: {user_input}")
         st.write(f"Chatbot: {response}")
 else:
     st.error("Failed to load website data into memory.")
