@@ -24,21 +24,20 @@ def scrape_website(url):
 # Scrape content and set up memory if successful
 scraped_text = scrape_website(url)
 if scraped_text:
-    # Define a prompt template for guidance
+    # Define a prompt template that takes a single input
     prompt_template = """
     You are a knowledgeable assistant trained on the information from a website. 
     Answer questions based on the website content as accurately as possible.
     If you cannot find the answer in the provided content, politely indicate that.
     Context:
-    {context}
+    {user_input}
 
-    User: {input}
     Assistant:"""
     
-    prompt = PromptTemplate(input_variables=["context", "input"], template=prompt_template)
+    prompt = PromptTemplate(input_variables=["user_input"], template=prompt_template)
     
     # Set up the language model and chain with memory
-    memory = ConversationBufferMemory(memory_key="chat_history")
+    memory = ConversationBufferMemory()
     llm = ChatOpenAI(model_name="gpt-4-turbo", temperature=0)
     conversation_chain = LLMChain(
         llm=llm,
@@ -65,10 +64,11 @@ if scraped_text:
         with st.chat_message("user"):
             st.markdown(prompt_text)
 
-        # Run the conversation chain with the prompt template
-        response = conversation_chain.run({"context": scraped_text, "input": prompt_text})
+        # Combine context and input into one user_input key
+        combined_input = f"Context:\n{scraped_text}\n\nUser Question:\n{prompt_text}"
+        response = conversation_chain.run({"user_input": combined_input})
+        
         st.session_state.messages.append({"role": "assistant", "content": response})
-
         with st.chat_message("assistant"):
             st.markdown(response)
 else:
