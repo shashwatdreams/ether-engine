@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request, jsonify
-from langchain.llms import OpenAI
-from langchain.chains import ConversationChain
-from langchain.prompts import PromptTemplate
-from langchain.memory import ConversationBufferMemory
+from langchain_community.llms import OpenAI
+from langchain_openai import ChatOpenAI  # Updated import for ChatOpenAI
 from bs4 import BeautifulSoup
 import requests
 import os
@@ -14,7 +12,10 @@ app = Flask(__name__)
 os.environ["OPENAI_API_KEY"] = "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"
 
 # Scrape website function
-url = "https://www.donaldjtrump.com/issues"
+urls = [
+    "https://www.donaldjtrump.com/issues",
+    "https://kamalaharris.com/issues/"
+]
 
 def scrape_website(url):
     response = requests.get(url)
@@ -27,17 +28,16 @@ def scrape_website(url):
         return None
 
 # Initialize LangChain components
-scraped_text = scrape_website(url)
-if scraped_text:
-    memory = ConversationBufferMemory()
-    memory.save_context({"input": "Initial context"}, {"output": scraped_text})
-    from langchain.chat_models import ChatOpenAI
-    llm = ChatOpenAI(temperature=0, model_name="gpt-4o-mini")
-    conversation_chain = ConversationChain(
-        llm=llm,
-        memory=memory,
-        verbose=True
-    )
+llm = ChatOpenAI(temperature=0, model_name="gpt-4o-mini")
+
+# Simple memory to keep track of conversation
+conversation_history = []
+
+# Scrape text from both websites and save the context
+for url in urls:
+    scraped_text = scrape_website(url)
+    if scraped_text:
+        conversation_history.append(f"Context: {scraped_text}")
 
 @app.route("/")
 def index():
@@ -46,7 +46,19 @@ def index():
 @app.route("/chat", methods=["POST"])
 def chat():
     user_input = request.json.get("message")
-    response = conversation_chain.run(user_input)
+    
+    # Append user input to the conversation history
+    conversation_history.append(f"User: {user_input}")
+
+    # Prepare the full conversation for LLM
+    full_prompt = "\n".join(conversation_history) + "\nAI:"
+    
+    # Generate response from the model
+    response = llm.generate(full_prompt)
+    
+    # Append AI response to the conversation history
+    conversation_history.append(f"AI: {response}")
+    
     return jsonify({"response": response})
 
 if __name__ == "__main__":
