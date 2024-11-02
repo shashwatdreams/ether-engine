@@ -1,0 +1,6 @@
+LangChain
+openai
+bs4
+tiktoken
+langchain_community
+flask
