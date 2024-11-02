@@ -11,18 +11,39 @@ import os
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
 url = "https://www.donaldjtrump.com/issues"
-def scrape_website(url):
+
+# Enhanced scraping function with filtering
+def scrape_website_filtered(url):
     response = requests.get(url)
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.text, 'html.parser')
-        return soup.get_text().strip()
-    else:
+    if response.status_code != 200:
         return None
 
-scraped_text = scrape_website(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    filtered_text = []
+
+    unwanted_tags = ["script", "style", "aside", "footer"]
+    unwanted_classes = ["popup", "banner", "donation", "footer", "aside"]
+    unwanted_keywords = ["donate", "support", "contribute", "subscribe"]
+
+    for element in soup.find_all(True):  # Finds all tags
+        if element.name in unwanted_tags:
+            continue
+        if any(cls in element.get("class", []) for cls in unwanted_classes):
+            continue
+        element_text = element.get_text().strip()
+        if any(keyword in element_text.lower() for keyword in unwanted_keywords):
+            continue
+        if len(element_text) >= 50:
+            filtered_text.append(element_text)
+
+    return "\n".join(filtered_text)
+
+# Run the scraping function
+scraped_text = scrape_website_filtered(url)
 if scraped_text:
     prompt_template = """
-    Talk like you in the victorian time, steampunk theme. You are a knowledgeable assistant trained on the information from a website. 
+    Talk like you are in the victorian time, in a steampunk theme. But keep your vocabulary minimal and make everything super understandable. 
+    You are a knowledgeable assistant trained on the information from a website. 
     Answer questions based on the website content as accurately as possible.
     If you cannot find the answer in the provided content, politely indicate that.
     Context:
