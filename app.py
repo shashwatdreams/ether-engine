@@ -11,6 +11,9 @@ import requests
 import numpy as np
 import os
 
+st.title("Main Page")
+st.sidebar.success("Select a page above.")
+
 # Set OpenAI API key from Streamlit secrets
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
