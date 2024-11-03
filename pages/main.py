@@ -2,7 +2,6 @@ import streamlit as st
 import plotly.express as px
 import pandas as pd
 
-# Sample Data with State Abbreviations and Links
 state_data = pd.DataFrame({
     'state': ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware',
               'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
@@ -25,7 +24,7 @@ fig = px.choropleth(
     scope="usa",
     title="Click on a state to navigate",
     hover_name="state",
-    color_discrete_sequence=["#636EFA"], 
+    color_discrete_sequence=["#636EFA"],  # Customize color if needed
 )
 
 st.plotly_chart(fig)
@@ -35,4 +34,4 @@ clicked_state = st.selectbox("Select a state:", state_data['state'])
 
 if clicked_state:
     abbrev = state_data.loc[state_data['state'] == clicked_state, 'abbrev'].values[0].lower()
-    st.write(f"Click [here](states/{abbrev}.py) to go to the {clicked_state} page.")
+    st.write(f"Click [here](/{abbrev}) to go to the {clicked_state} page.")
