@@ -12,8 +12,6 @@ import requests
 import numpy as np
 import os
 
-
-
 # Set up the OpenAI API key
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
@@ -28,33 +26,45 @@ url = "https://www.davemccormickpa.com/issues/" if politician == "Dave McCormick
 
 # Define a function to scrape and embed text
 def scrape_and_embed(url):
-    response = requests.get(url)
-    if response.status_code != 200:
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Check for HTTP errors
+    except requests.RequestException as e:
+        st.error(f"Failed to retrieve website data: {e}")
         return None, None
-    
+
+    # Parse website content
     soup = BeautifulSoup(response.text, 'html.parser')
     filtered_text = []
     unwanted_tags = ["script", "style", "aside", "footer"]
     unwanted_keywords = ["donate", "support", "contribute", "subscribe"]
-    
+
+    # Filter and clean text
     for element in soup.find_all(True):
         if element.name in unwanted_tags or any(keyword in element.get_text().lower() for keyword in unwanted_keywords):
             continue
         element_text = element.get_text().strip()
         if len(element_text) >= 50:
             filtered_text.append(element_text)
-    
+
     # Generate embeddings for each section of text
-    text_sections = filtered_text
-    embeddings = embedding_model.encode(text_sections)
-    return text_sections, embeddings
+    if filtered_text:
+        embeddings = embedding_model.encode(filtered_text)
+        return filtered_text, embeddings
+    else:
+        st.error("No relevant content found on the website.")
+        return None, None
 
 # Scrape and embed content
 text_sections, embeddings = scrape_and_embed(url)
-if text_sections is not None and embeddings is not None:
-    # Load the embeddings into FAISS vector store for retrieval
-    faiss_index = FAISS.from_texts(text_sections, OpenAIEmbeddings())
 
+if text_sections is None or embeddings is None:
+    st.stop()  # Stop execution if data isn't retrieved
+
+# Load the embeddings into FAISS vector store for retrieval
+faiss_index = FAISS.from_texts(text_sections, OpenAIEmbeddings())
+
+# Steampunk mode toggle
 steampunk_mode = st.checkbox("Enable Steampunk Mode")
 
 # Define prompt templates for normal and steampunk modes
@@ -78,29 +88,30 @@ if steampunk_mode:
     Assistant:"""
 
 def retrieve_relevant_text(prompt_text, faiss_index):
-    # Check if prompt_text was successfully retrieved
-    if not prompt_text:
-        st.error("Failed to retrieve prompt text. Please check the data source.")
-        return ""
-
     try:
         # Embed the prompt text
         question_embedding = OpenAIEmbeddings().embed_query(prompt_text)
         
-        # Reshape the embedding if needed
+        # Ensure embedding is a 2D array
         if isinstance(question_embedding, list):
             question_embedding = np.array(question_embedding)
         if len(question_embedding.shape) == 1:
             question_embedding = question_embedding.reshape(1, -1)
+        
+        # Check if dimensions match the FAISS index
+        index_dim = faiss_index.index.d
+        if question_embedding.shape[1] != index_dim:
+            st.error(f"Embedding dimension {question_embedding.shape[1]} does not match FAISS index dimension {index_dim}.")
+            return []
 
         # Perform similarity search
         docs = faiss_index.similarity_search_by_vector(question_embedding, k=3)
         return docs
-    except AttributeError as e:
+    except AttributeError:
         st.error("Embedding method is not available. Check OpenAIEmbeddings setup.")
         return []
     except ValueError as e:
-        st.error("Error during similarity search. Please verify the embeddings and FAISS setup.")
+        st.error(f"Error during similarity search: {e}")
         return []
 
 # Initialize LangChain prompt and chain
