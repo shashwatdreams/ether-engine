@@ -80,7 +80,7 @@ def retrieve_relevant_text(user_question, text_sections, embeddings):
     
     return most_relevant_text
 
-if text_sections and embeddings:
+if text_sections and embeddings.size > 0:
     prompt = PromptTemplate(input_variables=["user_input"], template=prompt_template)
     memory = ConversationBufferMemory()
     llm = ChatOpenAI(model_name="gpt-4", temperature=0)
@@ -102,7 +102,10 @@ if text_sections and embeddings:
         with st.chat_message("user"):
             st.markdown(prompt_text)
 
+        # Retrieve relevant text for context
         context_text = retrieve_relevant_text(prompt_text, text_sections, embeddings)
+        
+        # Combine the context with the user question for the prompt
         combined_input = f"Context:\n{context_text}\n\nUser Question:\n{prompt_text}"
         response = conversation_chain.run({"user_input": combined_input})
         
