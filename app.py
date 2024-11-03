@@ -8,10 +8,23 @@ from bs4 import BeautifulSoup
 import requests
 import os
 
+# Set OpenAI API key from Streamlit secrets
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
-url = "https://www.donaldjtrump.com/issues"
+# Main section selection for politician
+st.title("Election Policy Chatbot")
+st.write("Select a candidate to analyze their policies directly from their website content.")
 
+# Choice of candidate
+politician = st.radio("Choose a Candidate:", ["Donald Trump", "Kamala Harris"])
+
+# Set URL based on selected candidate
+url = "https://www.donaldjtrump.com/issues" if politician == "Donald Trump" else "https://kamalaharris.com/issues/"
+
+# Main section option for Steampunk Mode
+steampunk_mode = st.checkbox("Enable Steampunk Mode")
+
+# Enhanced scraping function with filtering
 def scrape_website_filtered(url):
     response = requests.get(url)
     if response.status_code != 200:
@@ -41,10 +54,10 @@ def scrape_website_filtered(url):
 
     return "\n".join(filtered_text)
 
+# Run the scraping function
 scraped_text = scrape_website_filtered(url)
 
-steampunk_mode = st.sidebar.checkbox("Steampunk Mode")
-
+# Choose the prompt template based on Steampunk Mode
 if steampunk_mode:
     prompt_template = """
     Talk like you are in the victorian time, in a steampunk theme. But keep your vocabulary minimal and make everything super understandable. 
@@ -76,8 +89,7 @@ if scraped_text:
         memory=memory
     )
 
-    st.title("Election Policy Chatbot")
-    st.write("Ask questions about each candidate's policy based directly off their website.")
+    st.write("Ask questions about each candidate's policy based directly off their website content.")
 
     if "messages" not in st.session_state:
         st.session_state.messages = []
