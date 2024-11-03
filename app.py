@@ -75,6 +75,57 @@ else:
 
     Assistant:"""
 
+if steampunk_mode:
+    st.markdown(
+        """
+        <style>
+            /* Background and font styling for Steampunk Mode */
+            body {
+                background-color: #2E2A24;
+                color: #F3E5AB;
+                font-family: "Courier New", monospace;
+            }
+            /* Chatbot container styling */
+            .stApp {
+                background: radial-gradient(circle, #3C3B3D, #222222);
+                color: #F3E5AB;
+                padding: 2rem;
+                border: 2px solid #8B5E3B;
+                border-radius: 15px;
+                box-shadow: 5px 5px 10px #000000;
+            }
+            /* Text styling for messages */
+            .user-text {
+                color: #FFD700;
+                font-weight: bold;
+                font-size: 1.1em;
+                margin-bottom: 10px;
+            }
+            .assistant-text {
+                color: #00CED1;
+                font-size: 1em;
+            }
+            /* Header and sidebar styling */
+            .stSidebar {
+                background-color: #4B3621;
+            }
+            .css-1d391kg {
+                color: #FFD700;
+                font-size: 1.2em;
+            }
+            .stSidebar h1 {
+                color: #DAA520;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+    st.title("🔧 Steampunk Chatbot")
+    st.write("Interact with the Victorian-themed chatbot and ask questions based on the website data.")
+else:
+    st.title("Website-Scraped Chatbot")
+    st.write("Ask questions based on the scraped data from the website.")
+
 # Main Streamlit app logic
 if scraped_text:
     prompt = PromptTemplate(input_variables=["user_input"], template=prompt_template)
