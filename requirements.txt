@@ -10,3 +10,5 @@ protobuf==3.20.3
 duckdb
 sentence-transformers
 scikit-learn
+pandas
+plotly
