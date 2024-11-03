@@ -25,15 +25,15 @@ state_data = pd.DataFrame({
 
 state_data['senate_race'] = state_data['state'].apply(lambda x: '2024 Race' if x in senate_race_states else 'No Race')
 
-st.title("Interactive U.S. Map with 2024 Senate Races Highlighted")
+st.title("2024 U.S. Senate Races")
 
 fig = px.choropleth(
     state_data,
     locations="abbrev",
     locationmode="USA-states",
     scope="usa",
-    color="senate_race",  # Highlight states with Senate races
-    color_discrete_map={'2024 Race': '#FF6347', 'No Race': '#B0C4DE'},  # Colors: red for races, light blue otherwise
+    color="senate_race",
+    color_discrete_map={'Senate Race': '#FF6347', 'No Race': '#B0C4DE'},  # Colors: red for races, light blue otherwise
     hover_name="state",
     title="2024 Senate Races by State"
 )
