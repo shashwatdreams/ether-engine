@@ -15,10 +15,12 @@ import os
 # Set up the OpenAI API key
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
+# Load the embedding model
 embedding_model = SentenceTransformer('paraphrase-MiniLM-L3-v2')
 st.title("PA Senate Race")
 st.write("Select a candidate to analyze their policies directly from their website content.")
 
+# Choose the politician
 politician = st.radio("Choose a Candidate:", ["Dave McCormick (R)", "Bob Casey Jr. (D)"])
 url = "https://www.davemccormickpa.com/issues/" if politician == "Dave McCormick (R)" else "https://bobcasey.com/issues/"
 
@@ -27,7 +29,7 @@ def scrape_and_embed(url):
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
     }
-
+    
     try:
         response = requests.get(url, headers=headers)
         response.raise_for_status()  # Check if the request was successful
@@ -39,13 +41,16 @@ def scrape_and_embed(url):
         st.error("Received empty response from the website.")
         return None, None
 
+    # Preview of HTML content for debugging
     st.write("Preview of raw HTML content:", response.text[:500])
 
+    # Parse website content
     soup = BeautifulSoup(response.text, 'html.parser')
     filtered_text = []
     unwanted_tags = ["script", "style", "aside", "footer"]
     unwanted_keywords = ["donate", "support", "contribute", "subscribe"]
 
+    # Filter and clean text
     for element in soup.find_all(True):
         if element.name in unwanted_tags or any(keyword in element.get_text().lower() for keyword in unwanted_keywords):
             continue
@@ -57,18 +62,22 @@ def scrape_and_embed(url):
         st.error("No relevant content found on the website after filtering.")
         return None, None
 
+    # Generate embeddings for each section of text
     embeddings = embedding_model.encode(filtered_text)
     return filtered_text, embeddings
 
+# Scrape and embed content
 text_sections, embeddings = scrape_and_embed(url)
-
 if text_sections is None or embeddings is None:
     st.stop()  # Stop execution if data isn't retrieved
 
+# Load the embeddings into FAISS vector store for retrieval
 faiss_index = FAISS.from_texts(text_sections, OpenAIEmbeddings())
 
+# Steampunk mode toggle
 steampunk_mode = st.checkbox("Enable Steampunk Mode")
 
+# Define prompt templates for normal and steampunk modes
 prompt_template = """
     You are a knowledgeable assistant trained on the information from a website. 
     Answer questions based on the website content as accurately as possible.
@@ -133,7 +142,6 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# User input and response generation
 if prompt_text := st.chat_input("Enter your message here..."):
     st.session_state.messages.append({"role": "user", "content": prompt_text})
     with st.chat_message("user"):
@@ -147,5 +155,3 @@ if prompt_text := st.chat_input("Enter your message here..."):
     st.session_state.messages.append({"role": "assistant", "content": response})
     with st.chat_message("assistant"):
         st.markdown(response)
-else:
-    st.error("Failed to load website data into memory.")
