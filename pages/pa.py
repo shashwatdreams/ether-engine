@@ -12,6 +12,8 @@ import requests
 import numpy as np
 import os
 
+
+
 # Set up the OpenAI API key
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 

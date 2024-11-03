@@ -12,3 +12,4 @@ sentence-transformers
 scikit-learn
 pandas
 plotly
+faiss-cpu
