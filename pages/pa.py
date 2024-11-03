@@ -78,12 +78,21 @@ if steampunk_mode:
     Assistant:"""
 
 # Function to retrieve relevant context using FAISS
-def retrieve_relevant_text(user_question, faiss_index):
-    # Embed the user's question and retrieve similar content from FAISS
-    question_embedding = embedding_model.encode([user_question])
-    docs = faiss_index.similarity_search_by_vector(question_embedding, k=3)
-    most_relevant_text = "\n\n".join([doc.page_content for doc in docs])
-    return most_relevant_text
+# Example function for retrieving text
+def retrieve_relevant_text(prompt_text, faiss_index):
+    question_embedding = OpenAIEmbeddings().embed_text(prompt_text)
+    
+    if isinstance(question_embedding, list):
+        question_embedding = np.array(question_embedding)
+    if len(question_embedding.shape) == 1:
+        question_embedding = question_embedding.reshape(1, -1)
+    
+    try:
+        docs = faiss_index.similarity_search_by_vector(question_embedding, k=3)
+        return docs
+    except ValueError as e:
+        st.error("Error during similarity search. Please check the embedding and FAISS setup.")
+        return []
 
 # Initialize LangChain prompt and chain
 prompt = PromptTemplate(input_variables=["user_input"], template=prompt_template)
