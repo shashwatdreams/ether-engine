@@ -25,7 +25,7 @@ fig = px.choropleth(
     scope="usa",
     title="Click on a state to navigate",
     hover_name="state",
-    color_discrete_sequence=["#636EFA"],  # Customize color if needed
+    color_discrete_sequence=["#636EFA"], 
 )
 
 st.plotly_chart(fig)
