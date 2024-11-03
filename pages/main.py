@@ -154,11 +154,22 @@ candidate_urls = {
 # Data setup
 senate_race_states = list(candidate_urls.keys())  # Only states with defined candidates
 
+state_abbrevs = {
+    'Arizona': 'AZ', 'California': 'CA', 'Connecticut': 'CT', 'Delaware': 'DE',
+    'Florida': 'FL', 'Hawaii': 'HI', 'Indiana': 'IN', 'Maine': 'ME', 'Maryland': 'MD',
+    'Massachusetts': 'MA', 'Michigan': 'MI', 'Minnesota': 'MN', 'Mississippi': 'MS',
+    'Missouri': 'MO', 'Montana': 'MT', 'Nebraska': 'NE', 'Nevada': 'NV', 'New Jersey': 'NJ',
+    'New Mexico': 'NM', 'New York': 'NY', 'Ohio': 'OH', 'Pennsylvania': 'PA',
+    'Rhode Island': 'RI', 'Tennessee': 'TN', 'Texas': 'TX', 'Utah': 'UT', 'Vermont': 'VT',
+    'Virginia': 'VA', 'Washington': 'WA', 'West Virginia': 'WV', 'Wisconsin': 'WI', 'Wyoming': 'WY'
+}
+
+# Create DataFrame using the state_abbrevs dictionary
 state_data = pd.DataFrame({
     'state': senate_race_states,
-    'abbrev': ['PA']  # Abbreviations for states; expand as needed
+    'abbrev': [state_abbrevs[state] for state in senate_race_states],
+    'senate_race': '2024 Race'
 })
-state_data['senate_race'] = '2024 Race'
 
 # Display map
 st.title("2024 U.S. Senate Races")
