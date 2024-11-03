@@ -16,10 +16,8 @@ state_data = pd.DataFrame({
                'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY']
 })
 
-# Title for the app
 st.title("Interactive U.S. Map with Clickable States")
 
-# Map visualization using Plotly
 fig = px.choropleth(
     state_data,
     locations="abbrev",
@@ -30,17 +28,11 @@ fig = px.choropleth(
     color_discrete_sequence=["#636EFA"],  # Customize color if needed
 )
 
-# Display the map in Streamlit
 st.plotly_chart(fig)
 
-# User Input for State Selection
 st.write("### Select a State by Abbreviation")
 clicked_state = st.selectbox("Select a state:", state_data['state'])
 
-# Check and Create Navigation Link
 if clicked_state:
-    # Get the abbreviation for the selected state
     abbrev = state_data.loc[state_data['state'] == clicked_state, 'abbrev'].values[0].lower()
-    
-    # Use a Streamlit link to the specific state page
-    st.write(f"Click [here](pages/{abbrev}.py) to go to the {clicked_state} page.")
+    st.write(f"Click [here](states/{abbrev}.py) to go to the {clicked_state} page.")
