@@ -21,7 +21,6 @@ state_data = pd.DataFrame({
              'VA', 'WA', 'WV', 'WI', 'WY']]
 })
 
-# Title for the app
 st.title("Interactive U.S. Map with Clickable States")
 
 # Map visualization using Plotly
@@ -40,14 +39,17 @@ st.plotly_chart(fig)
 
 # User Input for State Selection
 st.write("### Select a State by Abbreviation")
-clicked_state = st.text_input("Enter state abbreviation (e.g., AL for Alabama):")
+clicked_state = st.selectbox("Select a state:", state_data['state'])
 
 # Check and Navigate
 if clicked_state:
-    link = state_data.loc[state_data['abbrev'] == clicked_state.upper(), 'link'].values
-    if link:
-        st.write(f"Click [here to navigate to {clicked_state.upper()}](#)")
-        # Placeholder link. In a full app, replace with navigation functionality as Streamlit supports multipage apps.
-    else:
-        st.write("State not found. Please enter a valid abbreviation.")
+    # Get the abbreviation for the selected state
+    abbrev = state_data.loc[state_data['state'] == clicked_state, 'abbrev'].values[0].lower()
+    st.experimental_set_query_params(state=abbrev)
 
+    # Write a link to navigate
+    st.write(f"Click [here](/{abbrev}) to go to {clicked_state}'s page.")
+
+    # Redirect to the state page (in a Streamlit multipage setup)
+    st.write(f"Redirecting to the {clicked_state} page...")
+    st.experimental_rerun()
