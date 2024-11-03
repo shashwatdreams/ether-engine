@@ -227,7 +227,6 @@ if clicked_state in candidate_urls:
         Talk like you are in the victorian time, in a steampunk theme. But keep your vocabulary minimal and make everything super understandable. 
         You are a knowledgeable assistant trained on the information from a website. 
         Answer questions based on the website content as accurately as possible.
-        If you cannot find the answer in the provided content, politely indicate that.
         Context:
         {user_input}
 
@@ -236,7 +235,6 @@ if clicked_state in candidate_urls:
         prompt_template = """
         You are a knowledgeable assistant trained on the information from a website. 
         Answer questions based on the website content as accurately as possible.
-        If you cannot find the answer in the provided content, politely indicate that.
         Context:
         {user_input}
 
