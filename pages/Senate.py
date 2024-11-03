@@ -181,7 +181,6 @@ fig = px.choropleth(
     color="senate_race",
     color_discrete_map={'2024 Race': '#FF6347'},
     hover_name="state",
-    title="2024 Senate Races by State"
 )
 st.plotly_chart(fig)
 
