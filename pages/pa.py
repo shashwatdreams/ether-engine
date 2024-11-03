@@ -63,7 +63,6 @@ else:
     prompt_template = """
     You are a knowledgeable assistant trained on the information from a website. 
     Answer questions based on the website content as accurately as possible.
-    If you cannot find the answer in the provided content, politely indicate that.
     Context:
     {user_input}
 
@@ -73,8 +72,8 @@ def retrieve_relevant_text(user_question, text_sections, embeddings):
     question_embedding = embedding_model.encode([user_question])
     
     similarities = cosine_similarity(question_embedding, embeddings)[0]
-    most_similar_indices = np.argsort(similarities)[-3:]  # Get top 3 most relevant sections
-    most_relevant_text = "\n\n".join([text_sections[i] for i in reversed(most_similar_indices)])  # Retrieve most relevant sections
+    most_similar_indices = np.argsort(similarities)[-3:] 
+    most_relevant_text = "\n\n".join([text_sections[i] for i in reversed(most_similar_indices)]) 
     
     return most_relevant_text
 
