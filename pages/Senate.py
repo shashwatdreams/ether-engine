@@ -26,84 +26,84 @@ candidate_urls = {
         'Ruben Gallego (D)': 'https://gallegoforarizona.com/issues/'
     },
     'California': {
-        'Adam Schiff (D)': 'https://adamschiff.com/issues/',
-        'James Bradley (R)': 'https://bradleyforsenate.com/issues/'
+        'Adam Schiff (D)': 'https://www.adamschiff.com/plans/',
+        'Steve Garvey (R)': 'https://stevegarvey.com/steves-vision/'
     },
     'Connecticut': {
         'Chris Murphy (D)': 'https://chrismurphy.com/issues/',
-        'Leora Levy (R)': 'https://leoraforct.com/issues/'
+        'Matthew Corey (R)': 'https://coreyforsenate.com/on-the-issues'
     },
     'Delaware': {
-        'Chris Coons (D)': 'https://chriscoons.com/issues/',
-        'Lauren Witzke (R)': 'https://laurenwitzke.com/issues/'
+        'Lisa Blunt Rochester (D)': 'https://lisabluntrochester.com/issues/',
+        'Eric Hansen (R)': 'https://voteerichansen.com/#Policies'
     },
     'Florida': {
-        'Rick Scott (R)': 'https://rickscottforflorida.com/issues/',
+        'Rick Scott (R)': 'https://rescueamerica.com/12-point-plan/',
         'Debbie Mucarsel-Powell (D)': 'https://debbiemucarselpowell.com/issues/'
     },
     'Hawaii': {
         'Mazie Hirono (D)': 'https://mazieforhawaii.com/issues/',
-        'John Carroll (R)': 'https://carroll4senate.com/issues/'
+        'Bob McDermott (R)': 'https://votemcdermott.com/key-issues/'
     },
     'Indiana': {
-        'Mike Braun (R)': 'https://mikebraunforindiana.com/issues/',
-        'Tom McDermott (D)': 'https://mcdermottforindiana.com/issues/'
+        'Jim Banks (R)': 'https://banksforsenate.com/issues/',
+        'Valerie McCray (D)': 'https://valeriemccray.org/platform'
     },
     'Maine': {
-        'Susan Collins (R)': 'https://susancollins.com/issues/',
-        'Sara Gideon (D)': 'https://saragideon.com/issues/'
+        'Angus King (I)': 'https://angusformaine.com/priorities/',
+        'Demi Kouzounas (R)': 'https://demiforsenate.com/issues/'
     },
     'Maryland': {
-        'Angela Alsobrooks (D)': 'https://angelaalsobrooks.com/issues/',
-        'Larry Hogan (R)': 'https://larryhogan.com/issues/'
+        'Angela Alsobrooks (D)': 'https://www.angelaalsobrooks.com/priorities',
+        'Larry Hogan (R)': 'https://larryhogan.com/strong-independent-leadership/'
     },
     'Massachusetts': {
-        'Elizabeth Warren (D)': 'https://elizabethwarren.com/issues/',
-        'Geoff Diehl (R)': 'https://diehlforsenate.com/issues/'
+        'Elizabeth Warren (D)': 'https://elizabethwarren.com/plans',
+        'John Deaton (R)': 'https://johndeatonforsenate.com/issues/'
     },
     'Michigan': {
-        'Elissa Slotkin (D)': 'https://elissaforcongress.com/issues/',
-        'Mike Rogers (R)': 'https://mikerogersforsenate.com/issues/'
+        'Elissa Slotkin (D)': 'https://elissaslotkin.org/priorities/',
+        'Mike Rogers (R)': 'https://rogersforsenate.com/issues/'
     },
     'Minnesota': {
         'Amy Klobuchar (D)': 'https://amyklobuchar.com/issues/',
-        'Jason Lewis (R)': 'https://lewisformn.com/issues/'
+        'Royce White (R)': 'https://roycewhite.us/issues/'
     },
     'Mississippi': {
-        'Cindy Hyde-Smith (R)': 'https://cindyhydesmith.com/issues/',
-        'Mike Espy (D)': 'https://espyforsenate.com/issues/'
+        'Roger Wicker (R)': 'https://www.wicker.senate.gov/biography',
+        'Ty Pinkins (D)': 'https://www.typinkins.com/issues'
     },
     'Missouri': {
-        'Josh Hawley (R)': 'https://joshhawley.com/issues/',
-        'Lucas Kunce (D)': 'https://lucaskunce.com/issues/'
+        'Josh Hawley (R)': 'https://joshhawley.com/',
+        'Lucas Kunce (D)': 'https://lucaskunce.com/meet-lucas-kunce/'
     },
     'Montana': {
         'Jon Tester (D)': 'https://jontester.com/issues/',
-        'Tim Sheehy (R)': 'https://sheehyforsenate.com/issues/'
+        'Tim Sheehy (R)': 'https://timformt.com/on-the-issues/'
     },
     'Nebraska': {
-        'Deb Fischer (R)': 'https://debfischer.com/issues/',
-        'Dan Osborn (I)': 'https://osbornforsenate.com/issues/'
+        'Deb Fischer (R)': 'https://debfornebraska.com/meet-deb/',
+        'Dan Osborn (I)': 'https://osbornforsenate.com/platform/'
     },
     'Nevada': {
         'Jacky Rosen (D)': 'https://rosenfornevada.com/issues/',
         'Sam Brown (R)': 'https://captainsambrown.com/issues/'
     },
     'New Jersey': {
-        'Bob Menendez (D)': 'https://menendezfornj.com/issues/',
-        'Thomas Kean Jr. (R)': 'https://keanforcongress.com/issues/'
+        'Andy Kim (D)': 'https://www.andykim.com/issues/',
+        'Curtis Bashaw (R)': 'https://curtisbashawforsenate.com/issues/'
     },
     'New Mexico': {
         'Martin Heinrich (D)': 'https://martinheinrich.com/issues/',
-        'Mick Rich (R)': 'https://mickrichforsenate.com/issues/'
+        'Nella Domenici (R)': 'https://www.nellaforsenate.com/issues'
     },
     'New York': {
-        'Kirsten Gillibrand (D)': 'https://kirstengillibrand.com/issues/',
-        'Chele Farley (R)': 'https://chelefarleyforsenate.com/issues/'
+        'Kirsten Gillibrand (D)': 'https://www.gillibrand.senate.gov/priorities/',
+        'Mike Sapraicone (R)': 'https://mikesapraiconeforsenate.com/issues/'
     },
     'Ohio': {
         'Sherrod Brown (D)': 'https://sherrodbrown.com/issues/',
-        'Bernie Moreno (R)': 'https://berniemoreno.com/issues/'
+        'Bernie Moreno (R)': 'https://berniemoreno.com/why-im-running/'
     },
     'Pennsylvania': {
         'Bob Casey Jr. (D)': 'https://bobcasey.com/issues/',
@@ -111,43 +111,43 @@ candidate_urls = {
     },
     'Rhode Island': {
         'Sheldon Whitehouse (D)': 'https://whitehouseforsenate.com/issues/',
-        'Robert Flanders (R)': 'https://flandersforsenate.com/issues/'
+        'Patricia Morgan (R)': 'https://www.patriciamorgan.com/on-the-issues-1'
     },
     'Tennessee': {
-        'Marsha Blackburn (R)': 'https://marshablackburn.com/issues/',
-        'Marquita Bradshaw (D)': 'https://marquitabradshaw.com/issues/'
+        'Marsha Blackburn (R)': 'https://www.blackburn.senate.gov/issues',
+        'Gloria Johnson (D)': 'https://www.votegloriajohnson.com/meet-gloria/'
     },
     'Texas': {
-        'Ted Cruz (R)': 'https://tedcruz.org/issues/',
-        'Colin Allred (D)': 'https://colinallred.com/issues/'
+        'Ted Cruz (R)': 'https://www.tedcruz.org/proven-record/',
+        'Colin Allred (D)': 'https://colinallred.com/on-the-issues/'
     },
     'Utah': {
-        'Mitt Romney (R)': 'https://romneyforutah.com/issues/',
-        'Jenny Wilson (D)': 'https://jennyforutah.com/issues/'
+        'John Curtis (R)': 'https://www.johncurtis.org/issues/',
+        'Caroline Gleich (D)': 'https://www.carolineforutah.com/issues'
     },
     'Vermont': {
         'Bernie Sanders (I)': 'https://berniesanders.com/issues/',
-        'Lawrence Zupan (R)': 'https://zupanforussenate.com/issues/'
+        'Gerald Malloy (R)': 'https://www.deploymalloy.com/landing/positions-24/'
     },
     'Virginia': {
         'Tim Kaine (D)': 'https://timkaine.com/issues/',
-        'Daniel Gade (R)': 'https://gadeforvirginia.com/issues/'
+        'Hung Cao (R)': 'https://www.hungforva.com/'
     },
     'Washington': {
         'Maria Cantwell (D)': 'https://cantwell.com/issues/',
-        'Susan Hutchison (R)': 'https://susan4senate.com/issues/'
+        'Raul Garcia (R)': 'https://garciaforwa.com/addressing-the-issues/'
     },
     'West Virginia': {
-        'Joe Manchin (D)': 'https://joemanchinwv.com/issues/',
-        'Patrick Morrisey (R)': 'https://morriseyforsenate.com/issues/'
+        'Jim Justice (R)': 'https://jimjusticewv.com/issues/',
+        'Glenn Elliot (D)': 'https://www.elliottforwv.com/issues/'
     },
     'Wisconsin': {
         'Tammy Baldwin (D)': 'https://tammybaldwin.com/issues/',
-        'Leah Vukmir (R)': 'https://leahvukmir.com/issues/'
+        'Eric Hovde (R)': 'https://erichovde.com/issues/'
     },
     'Wyoming': {
-        'John Barrasso (R)': 'https://barrassoforwyoming.com/issues/',
-        'Gary Trauner (D)': 'https://traunerforwyoming.com/issues/'
+        'John Barrasso (R)': 'https://barrassoforwyoming.com/#about',
+        'Scott Morrow (D)': 'https://morrowforwyoming.com/'
     }
 }
 
