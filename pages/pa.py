@@ -18,9 +18,9 @@ embedding_model = SentenceTransformer('paraphrase-MiniLM-L3-v2')
 st.title("PA Senate Race Chatbot")
 st.write("Select a candidate to analyze their policies directly from their website content.")
 
-politician = st.radio("Choose a Candidate:", ["Dave McCormick (R)", "Kamala Harris (D)"])
+politician = st.radio("Choose a Candidate:", ["Dave McCormick (R)", "Bob Casey Jr. (D)"])
 
-url = "https://www.davemccormickpa.com/issues/" if politician == "Dave McCormick (R)" else "https://kamalaharris.com/issues/"
+url = "https://www.davemccormickpa.com/issues/" if politician == "Dave McCormick (R)" else "https://bobcasey.com/issues/"
 
 def scrape_and_embed(url):
     response = requests.get(url)
