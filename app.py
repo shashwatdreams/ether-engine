@@ -89,8 +89,6 @@ if scraped_text:
         memory=memory
     )
 
-    st.write("Ask questions about each candidate's policy based directly off their website content.")
-
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
