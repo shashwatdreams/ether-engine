@@ -20,7 +20,6 @@ st.write("Select a candidate to analyze their policies directly from their websi
 
 politician = st.radio("Choose a Candidate:", ["Donald Trump (R)", "Kamala Harris (D)"])
 
-# Set URL based on selected candidate
 url = "https://www.donaldjtrump.com/issues" if politician == "Donald Trump (R)" else "https://kamalaharris.com/issues/"
 
 def scrape_and_embed(url):
@@ -83,7 +82,7 @@ def retrieve_relevant_text(user_question, text_sections, embeddings):
 if text_sections and embeddings.size > 0:
     prompt = PromptTemplate(input_variables=["user_input"], template=prompt_template)
     memory = ConversationBufferMemory()
-    llm = ChatOpenAI(model_name="gpt-4", temperature=0)
+    llm = ChatOpenAI(model_name="gpt-4o-mini", temperature=0)
     conversation_chain = LLMChain(
         llm=llm,
         prompt=prompt,
@@ -102,10 +101,7 @@ if text_sections and embeddings.size > 0:
         with st.chat_message("user"):
             st.markdown(prompt_text)
 
-        # Retrieve relevant text for context
         context_text = retrieve_relevant_text(prompt_text, text_sections, embeddings)
-        
-        # Combine the context with the user question for the prompt
         combined_input = f"Context:\n{context_text}\n\nUser Question:\n{prompt_text}"
         response = conversation_chain.run({"user_input": combined_input})
         
