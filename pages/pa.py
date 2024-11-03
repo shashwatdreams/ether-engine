@@ -15,12 +15,12 @@ import os
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
 embedding_model = SentenceTransformer('paraphrase-MiniLM-L3-v2')
-st.title("PA Senate Race")
+st.title("Election Policy Chatbot")
 st.write("Select a candidate to analyze their policies directly from their website content.")
 
-politician = st.radio("Choose a Candidate:", ["Dave McCormick (R)", "Bob Casey Jr. (D)"])
+politician = st.radio("Choose a Candidate:", ["Donald Trump (R)", "Kamala Harris (D)"])
 
-url = "https://www.davemccormickpa.com/issues/" if politician == "Dave McCormick (R)" else "https://bobcasey.com/issues/"
+url = "https://www.donaldjtrump.com/issues" if politician == "Donald Trump (R)" else "https://kamalaharris.com/issues/"
 
 def scrape_and_embed(url):
     response = requests.get(url)
