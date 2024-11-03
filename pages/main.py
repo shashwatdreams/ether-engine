@@ -2,6 +2,14 @@ import streamlit as st
 import plotly.express as px
 import pandas as pd
 
+senate_race_states = ['Arizona', 'California', 'Connecticut', 'Delaware', 'Florida', 
+                      'Hawaii', 'Indiana', 'Maine', 'Maryland', 'Massachusetts', 
+                      'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 
+                      'Montana', 'Nebraska', 'Nevada', 'New Jersey', 'New Mexico', 
+                      'New York', 'North Dakota', 'Ohio', 'Pennsylvania', 
+                      'Rhode Island', 'Tennessee', 'Texas', 'Utah', 'Vermont', 
+                      'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
+
 state_data = pd.DataFrame({
     'state': ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware',
               'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
@@ -15,16 +23,19 @@ state_data = pd.DataFrame({
                'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY']
 })
 
-st.title("Interactive U.S. Map with Clickable States")
+state_data['senate_race'] = state_data['state'].apply(lambda x: '2024 Race' if x in senate_race_states else 'No Race')
+
+st.title("Interactive U.S. Map with 2024 Senate Races Highlighted")
 
 fig = px.choropleth(
     state_data,
     locations="abbrev",
     locationmode="USA-states",
     scope="usa",
-    title="Click on a state to navigate",
+    color="senate_race",  # Highlight states with Senate races
+    color_discrete_map={'2024 Race': '#FF6347', 'No Race': '#B0C4DE'},  # Colors: red for races, light blue otherwise
     hover_name="state",
-    color_discrete_sequence=["#636EFA"],  # Customize color if needed
+    title="2024 Senate Races by State"
 )
 
 st.plotly_chart(fig)
