@@ -7,27 +7,24 @@ from langchain.prompts import PromptTemplate
 from bs4 import BeautifulSoup
 import requests
 import os
-from langchain.embeddings import OpenAIEmbeddings
-from chromadb import Client as ChromaClient
-from chromadb.config import Settings
 
-# Configure ChromaDB to use in-memory storage
-chroma_client = ChromaClient(Settings(
-    chroma_db_impl="duckdb+parquet",
-    persist_directory=None  # Use None for in-memory storage
-))
-
+# Set OpenAI API key from Streamlit secrets
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
+# Main section selection for politician
 st.title("Election Policy Chatbot")
 st.write("Select a candidate to analyze their policies directly from their website content.")
 
-politician = st.radio("Choose a Candidate:", ["Donald Trump", "Kamala Harris"])
+# Choice of candidate
+politician = st.radio("Choose a Candidate:", ["Donald Trump (R)", "Kamala Harris (D)"])
 
-url = "https://www.donaldjtrump.com/issues" if politician == "Donald Trump" else "https://kamalaharris.com/issues/"
+# Set URL based on selected candidate
+url = "https://www.donaldjtrump.com/issues" if politician == "Donald Trump (R)" else "https://kamalaharris.com/issues/"
 
+# Main section option for Steampunk Mode
 steampunk_mode = st.checkbox("Enable Steampunk Mode")
 
+# Enhanced scraping function with filtering
 def scrape_website_filtered(url):
     response = requests.get(url)
     if response.status_code != 200:
@@ -55,20 +52,12 @@ def scrape_website_filtered(url):
         if len(element_text) >= 50:
             filtered_text.append(element_text)
 
-    return filtered_text
+    return "\n".join(filtered_text)
 
-scraped_segments = scrape_website_filtered(url)
+# Run the scraping function
+scraped_text = scrape_website_filtered(url)
 
-chroma_client = ChromaClient(Settings())
-embedding_model = OpenAIEmbeddings(model="text-embedding-ada-002")
-
-if scraped_segments:
-    collection_name = f"{politician.lower()}_policy_segments"
-    collection = chroma_client.get_or_create_collection(collection_name, embedding_function=embedding_model.embed_text)
-
-    for i, segment in enumerate(scraped_segments):
-        collection.add_documents([{"text": segment, "metadata": {"index": i}}])
-
+# Choose the prompt template based on Steampunk Mode
 if steampunk_mode:
     prompt_template = """
     Talk like you are in the victorian time, in a steampunk theme. But keep your vocabulary minimal and make everything super understandable. 
@@ -89,12 +78,7 @@ else:
 
     Assistant:"""
 
-def get_relevant_content(user_input):
-    results = collection.query(query_texts=[user_input], n_results=3)
-    relevant_segments = [result["text"] for result in results["documents"][0]]
-    return "\n".join(relevant_segments)
-
-if scraped_segments:
+if scraped_text:
     prompt = PromptTemplate(input_variables=["user_input"], template=prompt_template)
     
     memory = ConversationBufferMemory()
@@ -116,8 +100,8 @@ if scraped_segments:
         st.session_state.messages.append({"role": "user", "content": prompt_text})
         with st.chat_message("user"):
             st.markdown(prompt_text)
-        relevant_content = get_relevant_content(prompt_text)
-        combined_input = f"Context:\n{relevant_content}\n\nUser Question:\n{prompt_text}"
+
+        combined_input = f"Context:\n{scraped_text}\n\nUser Question:\n{prompt_text}"
         response = conversation_chain.run({"user_input": combined_input})
         
         st.session_state.messages.append({"role": "assistant", "content": response})
