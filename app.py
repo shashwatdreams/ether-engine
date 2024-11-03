@@ -11,6 +11,12 @@ from langchain.embeddings import OpenAIEmbeddings
 from chromadb import Client as ChromaClient
 from chromadb.config import Settings
 
+# Configure ChromaDB to use in-memory storage
+chroma_client = ChromaClient(Settings(
+    chroma_db_impl="duckdb+parquet",
+    persist_directory=None  # Use None for in-memory storage
+))
+
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
 st.title("Election Policy Chatbot")
