@@ -65,7 +65,60 @@ else:
 
     Assistant:"""
 
-
+# Apply Steampunk theme styling if enabled
+if steampunk_mode:
+    st.markdown(
+        """
+        <style>
+            /* Background styling for Steampunk Mode */
+            body {
+                background: #2E2A24 url('https://example.com/path-to-your-gears-background.jpg') no-repeat center center fixed;
+                background-size: cover;
+                color: #F3E5AB;
+                font-family: 'Georgia', serif;
+            }
+            .stApp {
+                background: rgba(46, 42, 36, 0.8);  /* Dark semi-transparent background */
+                border-radius: 15px;
+                padding: 20px;
+            }
+            /* Custom chat styling */
+            .user-text {
+                color: #FFD700;
+                font-weight: bold;
+                font-size: 1.2em;
+                margin-bottom: 10px;
+            }
+            .assistant-text {
+                color: #AFEEEE;
+                font-size: 1em;
+            }
+            /* Sidebar and header adjustments */
+            .stSidebar, .css-1d391kg {
+                background-color: #4B3621;
+                color: #DAA520;
+            }
+            /* Decorative gears */
+            .gear {
+                position: absolute;
+                z-index: -1;
+                opacity: 0.3;
+            }
+            .gear-1 { top: 20%; left: 10%; width: 100px; height: 100px; }
+            .gear-2 { top: 50%; right: 10%; width: 80px; height: 80px; }
+            .gear-3 { bottom: 20%; left: 30%; width: 120px; height: 120px; }
+        </style>
+        <div class="gear gear-1"><img src="https://example.com/gear1.png" width="100" height="100"></div>
+        <div class="gear gear-2"><img src="https://example.com/gear2.png" width="80" height="80"></div>
+        <div class="gear gear-3"><img src="https://example.com/gear3.png" width="120" height="120"></div>
+        """,
+        unsafe_allow_html=True
+    )
+    st.title("🔧 Steampunk Chatbot")
+    st.write("Interact with the Victorian-themed chatbot and ask questions based on the website data.")
+else:
+    st.title("Website-Scraped Chatbot")
+    st.write("Ask questions based on the scraped data from the website.")
 
 if scraped_text:
     prompt = PromptTemplate(input_variables=["user_input"], template=prompt_template)
@@ -78,8 +131,8 @@ if scraped_text:
         memory=memory
     )
 
-    st.title("Website-Scraped Chatbot")
-    st.write("Ask questions based on the scraped data from the website.")
+    st.title("Election Policy Chatbot")
+    st.write("Ask questions about each candidate's policy based directly off their website.")
 
     if "messages" not in st.session_state:
         st.session_state.messages = []
