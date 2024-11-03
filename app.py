@@ -14,7 +14,7 @@ import os
 # Set OpenAI API key from Streamlit secrets
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
-embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
+embedding_model = SentenceTransformer('paraphrase-MiniLM-L3-v2')
 st.title("Election Policy Chatbot")
 st.write("Select a candidate to analyze their policies directly from their website content.")
 
